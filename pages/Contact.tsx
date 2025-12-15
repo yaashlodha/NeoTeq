@@ -1,6 +1,36 @@
 import React from 'react';
 import { Phone, Mail, MapPin, MessageCircle, Clock, Send } from 'lucide-react';
 
+const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  console.log("FORM SUBMITTED");
+  e.preventDefault();
+
+  const form = e.currentTarget;
+
+  const name = (form.querySelector('#name') as HTMLInputElement)?.value;
+  const phone = (form.querySelector('#phone') as HTMLInputElement)?.value;
+  const email = (form.querySelector('#email') as HTMLInputElement)?.value;
+  const subject = (form.querySelector('#subject') as HTMLSelectElement)?.value;
+  const message = (form.querySelector('#message') as HTMLTextAreaElement)?.value;
+
+  const whatsappNumber = "919047305863"; // replace with your number
+
+  const text = `
+New Contact Enquiry
+
+Name: ${name}
+Phone: ${phone}
+Email: ${email}
+Subject: ${subject}
+
+Message:
+${message}
+  `;
+
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+  window.open(url, "_blank");
+};
+
 const Contact: React.FC = () => {
   return (
     <div className="bg-white">
@@ -89,7 +119,8 @@ const Contact: React.FC = () => {
           {/* Contact Form */}
           <div className="lg:w-2/3 bg-white border border-gray-200 rounded-2xl p-8 shadow-lg">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">Send us a Message</h2>
-            <form onSubmit={(e) => e.preventDefault()} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
